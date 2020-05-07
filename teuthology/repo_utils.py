@@ -408,6 +408,9 @@ def bootstrap_teuthology(dest_path):
         env = os.environ.copy()
         env['NO_CLOBBER'] = '1'
         cmd = './bootstrap'
+        # tmh - before running bootstrap script, apply the change in the fetched source tree, not this current tree
+        list_files = subprocess.run(["sed", "-i", "-e", "s@python-pip@python3-pip@g", cmd])
+        list_files = subprocess.run(["sed", "-i", "-e", "s@--setuptools \$VENV@--setuptools latest \$VENV@g", cmd])
         boot_proc = subprocess.Popen(cmd, shell=True, cwd=dest_path, env=env,
                                      stdout=subprocess.PIPE,
                                      stderr=subprocess.STDOUT)

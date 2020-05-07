@@ -23,7 +23,7 @@ Linux)
         if [[ "$PYTHON" =~ "python2" ]]; then
             deps=(qemu-utils python-dev libssl-dev python-pip python-virtualenv libev-dev libvirt-dev libmysqlclient-dev libffi-dev libyaml-dev)
         else
-            deps=(qemu-utils python3-dev libssl-dev python-pip python3-virtualenv libev-dev libvirt-dev libmysqlclient-dev libffi-dev libyaml-dev)
+            deps=(qemu-utils python3-dev libssl-dev python3-pip python3-virtualenv libev-dev libvirt-dev libmysqlclient-dev libffi-dev libyaml-dev)
         fi
         for package in ${deps[@]}; do
             if [ "$(dpkg --status -- $package|sed -n 's/^Status: //p')" != "install ok installed" ]; then
@@ -136,7 +136,7 @@ if [ -z "$NO_CLOBBER" ] || [ ! -e ./$VENV ]; then
     if ! which virtualenv > /dev/null; then
         pip install virtualenv
     fi
-    virtualenv --python=$PYTHON --setuptools $VENV
+    virtualenv --python=$PYTHON --setuptools latest $VENV
 fi
 
 PVER=$(./$VENV/bin/python --version 2>&1 | grep Python)
